@@ -1,0 +1,81 @@
+import React, { useState, useContext } from "react";
+import { TextField, Button, Typography, Box, Alert } from "@mui/material";
+import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+
+export default function Checkout() {
+  const { cartItems, removeFromCart } = useContext(CartContext);
+  const [form, setForm] = useState({ name: "", email: "", address: "" });
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.address) return;
+
+    // Simulate placing order
+    removeFromCart();
+    setSuccess(true);
+
+    // Redirect after short delay
+    setTimeout(() => {
+      navigate("/products");
+    }, 2000);
+  };
+
+  if (cartItems.length === 0 && !success) {
+    return <Alert severity="warning">Your cart is empty!</Alert>;
+  }
+
+  return (
+    <Box sx={{ maxWidth: 400, mx: "auto", mt: 4 }}>
+      <Typography variant="h5" gutterBottom>
+        Checkout
+      </Typography>
+
+      <form onSubmit={handleSubmit}>
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Name"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+        />
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+        />
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Address"
+          name="address"
+          value={form.address}
+          onChange={handleChange}
+        />
+
+        <Button variant="contained" color="primary" type="submit" fullWidth sx={{ mt: 2 }}>
+          Place Order
+        </Button>
+      </form>
+
+      {success && (
+        <Alert severity="success" sx={{ mt: 3 }}>
+          🎉 Order placed successfully!
+        </Alert>
+      )}
+    </Box>
+  );
+}
