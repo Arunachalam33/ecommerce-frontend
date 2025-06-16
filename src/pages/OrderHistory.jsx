@@ -16,7 +16,7 @@ export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-   const API="https://ecommerce-backend-lygx.onrender.com";
+   const API= import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!isAuthenticated) return;

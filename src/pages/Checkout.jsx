@@ -9,7 +9,7 @@ export default function Checkout() {
   const [form, setForm] = useState({ name: "", email: "", address: "" });
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-   const API="https://ecommerce-backend-lygx.onrender.com";
+   const API= import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setForm((prev) => ({

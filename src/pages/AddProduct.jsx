@@ -22,7 +22,7 @@ export default function AddProduct() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
-   const API="https://ecommerce-backend-lygx.onrender.com";
+   const API= import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

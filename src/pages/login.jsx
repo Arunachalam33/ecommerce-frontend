@@ -7,7 +7,7 @@ import { Container, TextField, Button, Typography, Box } from "@mui/material";
 
 function Login(){
 
-     const API="https://ecommerce-backend-lygx.onrender.com";
+     const API= import.meta.env.VITE_API_URL;
     const navigate=useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";

@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 export default function AdminDashboard() {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
-   const API="https://ecommerce-backend-lygx.onrender.com";
+   const API= import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchOrders = async () => {

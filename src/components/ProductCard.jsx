@@ -10,7 +10,7 @@ function ProductCard({ product ,onDelete}) {
   const { addToCart } = useContext(CartContext);
   const { isAuthenticated ,user} = useContext(AuthContext);
   const navigate = useNavigate();
-  const API="https://ecommerce-backend-lygx.onrender.com";
+  const API= import.meta.env.VITE_API_URL;
 
    const handleAddToCart = () => {
     const added = addToCart(product, isAuthenticated);

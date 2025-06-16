@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
-   const API="https://ecommerce-backend-lygx.onrender.com";
+   const API= import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     axios.get(`${API}/api/product`)
