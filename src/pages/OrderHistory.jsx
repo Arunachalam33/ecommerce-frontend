@@ -9,7 +9,7 @@ import {
   CircularProgress,
   Alert
 } from "@mui/material";
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/AuthContext";
 
 export default function OrderHistory() {
   const { isAuthenticated } = useContext(AuthContext);
