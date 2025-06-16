@@ -9,6 +9,9 @@ import Cart from "./pages/Cart.jsx";
 import Navbar from "./components/NavBar.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import { Navigate } from "react-router-dom";
+import OrderHistory from "./pages/OrderHistory";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import AddProduct from "./pages/AddProduct.jsx";
 
 
 
@@ -21,12 +24,15 @@ function App() {
       <BrowserRouter>
       
         <Routes>
-          <Route path="/products" element={<ProtectedRoute><Navbar /><Products /></ProtectedRoute>}/>
-          <Route path="/cart" element={<ProtectedRoute><Navbar /><Cart /></ProtectedRoute>} />
+          <Route path="/products" element={<><Navbar /><Products /></>}/>
+          <Route path="/cart" element={<><Navbar /><Cart /></>} />
           <Route path="/checkout" element={<ProtectedRoute><Navbar /><Checkout /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/" element={<Navigate to="/products" />} />
+          <Route path="/orders" element={<OrderHistory />} />
+          <Route path="/admin/add-product" element={<AddProduct />} />
           
         </Routes>
       </BrowserRouter>

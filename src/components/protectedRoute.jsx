@@ -6,7 +6,7 @@ export default function ProtectedRoute({children}){
     const {isAuthenticated}=useContext(AuthContext);
 
     if(!isAuthenticated){
-        return <Navigate to="/login" replace />;
+        navigate("/login", { state: { from: location } });
 
     }
     return children;

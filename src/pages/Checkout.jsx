@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { TextField, Button, Typography, Box, Alert } from "@mui/material";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Checkout() {
   const { cartItems, removeFromCart } = useContext(CartContext);
@@ -16,19 +17,36 @@ export default function Checkout() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.name || !form.email || !form.address) return;
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!form.name || !form.email || !form.address) return;
 
-    // Simulate placing order
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.post("http://localhost:4000/api/orders", {
+      cartItems,
+      total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      name: form.name,
+      email: form.email,
+      address: form.address
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
     removeFromCart();
     setSuccess(true);
 
-    // Redirect after short delay
     setTimeout(() => {
       navigate("/products");
     }, 2000);
-  };
+  } catch (err) {
+    console.error("Order submission failed", err);
+  }
+};
+
 
   if (cartItems.length === 0 && !success) {
     return <Alert severity="warning">Your cart is empty!</Alert>;

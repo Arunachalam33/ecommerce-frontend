@@ -2,12 +2,32 @@ import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Container, Typography, Card, CardContent, Button, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import { useNavigate, useLocation } from "react-router-dom"; 
+
 
 export default function Cart() {
+
+  const navigate = useNavigate();        // ✅ Needed for redirection
+  const location = useLocation(); 
+
   const { cartItems, removeFromCart } = useContext(CartContext);
+  const {isAuthenticated}=useContext(AuthContext);
+  
+  const handleCheckout = () => {
+  if (!isAuthenticated) {
+    navigate("/login", { state: { from: location } });
+    return;
+  }
+  navigate("/checkout");
+};
+
+  
+
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+ 
   return (
     <Container>
       <Typography variant="h4" gutterBottom>🛒 Your Cart</Typography>
@@ -43,7 +63,7 @@ export default function Cart() {
           Total: ₹{total.toFixed(2)}
         </Typography>
       )}
-    <Button variant="contained" color="primary" component={Link} to="/checkout"sx={{ mt: 2 }}>
+    <Button variant="contained" color="primary"  onClick={handleCheckout} sx={{ mt: 2 }}>
       Proceed to Checkout
     </Button>
     </Container>

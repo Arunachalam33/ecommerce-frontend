@@ -13,16 +13,22 @@ function Products() {
       .catch(err => console.error("Error fetching products:", err));
   }, []);
 
+   
+
+  const handleProductDelete = (id) => {
+    setProducts(prev => prev.filter(product => product.id !== id));
+  };
+
   return (
     <div style={{ padding: "2rem" }}>
       <Typography variant="h4" gutterBottom>Our Products</Typography>
         <Button component={Link} to="/cart" variant="contained" color="secondary">
         Go to Cart
         </Button>
-      <Grid container spacing={3}>
+      <Grid container justifyContent="center" spacing={2}>
         {products.map(product => (
-          <Grid item xs={12} sm={6} md={4} key={product.id}>
-            <ProductCard product={product} />
+          <Grid item key={product.id}>
+            <ProductCard product={product} onDelete={handleProductDelete} />
           </Grid>
         ))}
       </Grid>

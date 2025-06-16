@@ -1,10 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useContext } from "react";
+
+
 
 export const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
-
+   const isAuthenticated=useContext(CartContext);
+  
   // Load from localStorage when component mounts
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -17,18 +21,24 @@ export default function CartProvider({ children }) {
   }, [cartItems]);
 
   // Add item to cart
-  function addToCart(product) {
-    setCartItems(prev => {
-      const exists = prev.find(item => item.id === product.id);
-      if (exists) {
-        return prev.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prev, { ...product, quantity: 1 }];
-      }
-    });
-  }
+
+ const addToCart = (product, isAuthenticated) => {
+  
+
+  setCartItems(prev => {
+    const exists = prev.find(item => item.id === product.id);
+    if (exists) {
+      return prev.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      return [...prev, { ...product, quantity: 1 }];
+    }
+  });
+
+  return true;
+};
+  
 
   // Remove item from cart
   function removeFromCart(productId) {

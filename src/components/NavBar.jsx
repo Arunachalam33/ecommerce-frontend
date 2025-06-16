@@ -16,17 +16,26 @@ export default function Navbar() {
           🛍️ MyShop
         </Typography>
 
-        <Typography variant="subtitle1">Welcome, {user?.username}</Typography>
+        <Typography variant="subtitle1">Welcome {user?.username}</Typography>
 
         <Box>
           <Button color="inherit" component={Link} to="/products">Products</Button>
+          {user?.is_admin && (
+          <Button color="inherit" component={Link} to="/admin/add-product">
+          Add Product
+          </Button>
+           )}
           <Button color="inherit" component={Link} to="/cart">
             Cart ({cartCount})
           </Button>
-          {isAuthenticated && (
+          <Button color="inherit" component={Link} to="/orders">
+           My Orders
+          </Button>
+          {isAuthenticated ? (
         <Button variant="outlined" color="error" onClick={logout}>
           Logout
-        </Button>)}
+        </Button>) : (
+          <Button variant="outlined" color="error" component={Link}to="/login">Login</Button>)}
         </Box>
       </Toolbar>
     </AppBar>

@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import axios from "axios";
-import {useNavigate } from "react-router-dom";
+import {useLocation,useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
@@ -9,6 +9,8 @@ function Login(){
 
     const API="http://localhost:4000";
     const navigate=useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
     const {login}=useContext(AuthContext);
     const [form,setform]=useState({
         username:"",
@@ -28,7 +30,7 @@ function Login(){
             const token=res.data.token;
             login(token);
             alert("Login Successfull");
-            navigate("/products",{state:{refresh:true}});
+            navigate(from, { replace: true });
         }catch(err){
             alert("Login failed");
             console.error("Login Failed",err);
