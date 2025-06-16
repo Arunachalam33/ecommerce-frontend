@@ -22,6 +22,25 @@ export default function CartProvider({ children }) {
 
   // Add item to cart
 
+
+  const increaseQuantity = (productId) => {
+  setCartItems((prev) =>
+    prev.map((item) =>
+      item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+    )
+  );
+};
+
+const decreaseQuantity = (productId) => {
+  setCartItems((prev) =>
+    prev.map((item) =>
+      item.id === productId && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    )
+  );
+};
+
  const addToCart = (product, isAuthenticated) => {
   
 
@@ -46,7 +65,7 @@ export default function CartProvider({ children }) {
   }
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart ,increaseQuantity, decreaseQuantity  }}>
       {children}
     </CartContext.Provider>
   );

@@ -31,13 +31,29 @@ function ProductCard({ product ,onDelete}) {
 
 
   return (
-    <Card sx={{ maxWidth: 300, m: 2, boxShadow: 3, borderRadius: 2 }}>
+    <Card sx={{
+    maxWidth: 300,
+    m: 2,
+    boxShadow: 4,
+    borderRadius: 3,
+    transition: "transform 0.3s",
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: 6,
+    },
+  }}>
       <CardMedia
-        component="img"
-        height="200"
-        image={product.image_url}
-        alt={product.name}
-        sx={{ objectFit: "cover" }}
+          component="img"
+  height="200"
+  image={product.image_url}
+  alt={product.name}
+  sx={{
+    height: 200,
+    width: "100%",
+    objectFit: "contain",
+    backgroundColor: "#f5f5f5",
+    p: 1
+  }}
       />
       <CardContent>
         <Typography variant="h6" gutterBottom>{product.name}</Typography>

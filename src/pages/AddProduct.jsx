@@ -1,6 +1,14 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Box,
+  Alert
+} from "@mui/material";
 
 export default function AddProduct() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -12,35 +20,123 @@ export default function AddProduct() {
     image: ""
   });
 
-  const handleChange = e => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       await axios.post("http://localhost:4000/api/product", form, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      alert("Product added successfully!");
+      setSuccess(true);
+      setError("");
+      setForm({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        image: "",
+      });
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to add product");
+      setError(err.response?.data?.message || "Failed to add product");
+      setSuccess(false);
     }
   };
 
-  if (!isAuthenticated) return <p>Please log in as admin</p>;
+  if (!isAuthenticated)
+    return (
+      <Alert severity="warning" sx={{ mt: 4, maxWidth: 500, mx: "auto" }}>
+        Please log in as admin to access this page.
+      </Alert>
+    );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="name" placeholder="Name" onChange={handleChange} />
-      <input name="description" placeholder="Description" onChange={handleChange} />
-      <input name="price" type="number" placeholder="Price" onChange={handleChange} />
-      <input name="category" placeholder="Category" onChange={handleChange} />
-      <input name="image" placeholder="Image URL" onChange={handleChange} />
-      <button type="submit">Add Product</button>
-    </form>
+    <Box sx={{ mt: 4 }}>
+      <Paper elevation={3} sx={{ maxWidth: 500, mx: "auto", p: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          ➕ Add New Product
+        </Typography>
+
+        {success && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            ✅ Product added successfully!
+          </Alert>
+        )}
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Product Name"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+          <TextField
+            label="Description"
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            fullWidth
+            required
+            multiline
+            rows={3}
+            margin="normal"
+          />
+          <TextField
+            label="Price (₹)"
+            name="price"
+            type="number"
+            value={form.price}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+          <TextField
+            label="Category"
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+          <TextField
+            label="Image URL"
+            name="image"
+            value={form.image}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
+            Add Product
+          </Button>
+        </form>
+      </Paper>
+    </Box>
   );
 }

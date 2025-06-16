@@ -21,10 +21,17 @@ export default function Navbar() {
         <Box>
           <Button color="inherit" component={Link} to="/products">Products</Button>
           {user?.is_admin && (
+            <>
           <Button color="inherit" component={Link} to="/admin/add-product">
           Add Product
           </Button>
+          <Button color="inherit" component={Link} to="/admin">
+          User Orders
+          </Button>
+          </>
            )}
+         
+          
           <Button color="inherit" component={Link} to="/cart">
             Cart ({cartCount})
           </Button>
