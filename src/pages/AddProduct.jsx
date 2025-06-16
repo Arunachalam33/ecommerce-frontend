@@ -22,6 +22,7 @@ export default function AddProduct() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+   const API="https://ecommerce-backend-lygx.onrender.com";
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,7 +32,7 @@ export default function AddProduct() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:4000/api/product", form, {
+      await axios.post(`${API}`, form, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -50,6 +51,7 @@ export default function AddProduct() {
       setSuccess(false);
     }
   };
+  
 
   if (!isAuthenticated)
     return (

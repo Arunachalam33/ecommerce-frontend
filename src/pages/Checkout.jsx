@@ -9,6 +9,7 @@ export default function Checkout() {
   const [form, setForm] = useState({ name: "", email: "", address: "" });
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+   const API="https://ecommerce-backend-lygx.onrender.com";
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -24,7 +25,7 @@ export default function Checkout() {
   try {
     const token = localStorage.getItem("token");
 
-    await axios.post("http://localhost:4000/api/orders", {
+    await axios.post(`${API}/api/orders`, {
       cartItems,
       total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
       name: form.name,

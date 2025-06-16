@@ -16,6 +16,7 @@ export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+   const API="https://ecommerce-backend-lygx.onrender.com";
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -23,7 +24,7 @@ export default function OrderHistory() {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:4000/api/orders", {
+        const response = await axios.get(`${API}/api/orders`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

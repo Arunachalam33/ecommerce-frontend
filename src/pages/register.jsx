@@ -6,7 +6,7 @@ import { Container, TextField, Button, Typography, Box } from "@mui/material";
 
 function Register(){
 
-    const API="http://localhost:4000";
+     const API="https://ecommerce-backend-lygx.onrender.com";
     const navigate=useNavigate();
     
     const [form,setform]=useState({
@@ -28,16 +28,16 @@ function Register(){
                 alert(res.data.message)
             navigate("/login");
             }else{
-                alert("Login failed")
+                alert("Registration failed")
             }
             
         }catch(err){
             if(err.response&&err.response.data&&err.response.data.message){
                 alert(`Error:${err.response.data.message}`);
             }else{
-                alert("login Unsuccessfull")
+                alert("Registration Unsuccessfull")
             }
-            console.error("Login Failed",err);
+            console.error("Registration Failed",err);
         }
     }
    

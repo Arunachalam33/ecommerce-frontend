@@ -13,11 +13,12 @@ import { useNavigate } from "react-router-dom";
 export default function AdminDashboard() {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
+   const API="https://ecommerce-backend-lygx.onrender.com";
 
   useEffect(() => {
     const fetchOrders = async () => {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:4000/api/admin/orders", {
+      const res = await axios.get(`${API}/api/admin/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOrders(res.data);
@@ -28,7 +29,7 @@ export default function AdminDashboard() {
   const handleShip = async (orderId) => {
     const token = localStorage.getItem("token");
     await axios.patch(
-      `http://localhost:4000/api/admin/orders/${orderId}/ship`,
+      `${API}/api/admin/orders/${orderId}/ship`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );

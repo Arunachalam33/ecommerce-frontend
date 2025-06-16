@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
+   const API="https://ecommerce-backend-lygx.onrender.com";
 
   useEffect(() => {
-    axios.get("http://localhost:4000/api/product")
+    axios.get(`${API}/api/product`)
       .then(res => setProducts(res.data))
       .catch(err => console.error("Error fetching products:", err));
   }, []);

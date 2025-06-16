@@ -10,6 +10,7 @@ function ProductCard({ product ,onDelete}) {
   const { addToCart } = useContext(CartContext);
   const { isAuthenticated ,user} = useContext(AuthContext);
   const navigate = useNavigate();
+  const API="https://ecommerce-backend-lygx.onrender.com";
 
    const handleAddToCart = () => {
     const added = addToCart(product, isAuthenticated);
@@ -18,7 +19,7 @@ function ProductCard({ product ,onDelete}) {
    const handleDelete = async () => {
   try {
     const token = localStorage.getItem("token");
-    await axios.delete(`http://localhost:4000/api/product/${product.id}`, {
+    await axios.delete(`${API}/api/product/${product.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     alert("Product deleted");
